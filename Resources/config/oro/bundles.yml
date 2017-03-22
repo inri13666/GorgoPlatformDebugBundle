@@ -1,0 +1,2 @@
+bundles:
+    - { name: Gorgo\Bundle\PlatformDebugBundle\GorgoPlatformDebugBundle, priority: 1000 }

@@ -1,0 +1,24 @@
+{
+    "name"             : "gorgo13/platform-debug-bundle",
+    "type"             : "symfony-bundle",
+    "description"      : "",
+    "keywords"         : [],
+    "homepage"         : "http://platform.gorgo.in",
+    "license"          : "WTFPL",
+    "authors"          : [
+        {
+            "name" : "Nikita Makarov",
+            "email": "mesaverde228@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require"          : {
+        "php"                  : ">=5.6"
+    },
+    "autoload"         : {
+        "psr-0": {
+            "Gorgo\\Bundle\\PlatformDebugBundle": ""
+        }
+    },
+    "target-dir"       : "Gorgo/Bundle/PlatformDebugBundle"
+}
