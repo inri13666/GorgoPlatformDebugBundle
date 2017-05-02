@@ -98,9 +98,14 @@ class DebugEmailTemplateCommand extends ContainerAwareCommand
             return 1;
         }
 
-        $output->writeln(sprintf('SUBJECT: %s', $template->getSubject()));
+        $output->writeln(sprintf('@name = %s', $template->getName()));
+        if ($template->getEntityName()) {
+            $output->writeln(sprintf('@entityName = %s', $template->getEntityName()));
+        }
+        $output->writeln(sprintf('@subject = %s', $template->getSubject()));
+        $output->writeln(sprintf('@isSystem = %s', $template->getIsSystem() ? 1 : 0));
+        $output->writeln(sprintf('@isEditable = %s', $template->getIsEditable() ? 1 : 0));
         $output->writeln('');
-        $output->writeln('BODY:');
         $output->writeln($template->getContent());
 
         return 0;
