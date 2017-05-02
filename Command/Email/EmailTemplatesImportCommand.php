@@ -42,9 +42,11 @@ class EmailTemplatesImportCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $source = $this->getContainer()
-            ->get('kernel')
-            ->locateResource($input->getArgument('source'));
+        $source = $input->getArgument('source');
+        try {
+            $source = $this->getContainer()->get('kernel')->locateResource($source);
+        } catch (\InvalidArgumentException $e) {
+        }
 
         $templates = $this->getRawTemplates($source);
         $output->writeln(sprintf('Found %d templates', count($templates)));
