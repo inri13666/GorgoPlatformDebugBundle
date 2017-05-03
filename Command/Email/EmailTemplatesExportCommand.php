@@ -53,12 +53,13 @@ class EmailTemplatesExportCommand extends ContainerAwareCommand
         /** @var EmailTemplate $template */
         foreach ($templates as $template) {
             $content = sprintf(
-                "@name = %s\n@entityName = %s\n@subject = %s\n@isSystem = %d\n@isEditable = %d\n\n%s",
+                "@name = %s\n@entityName = %s\n@subject = %s\n@isSystem = %d\n@isEditable = %d\n@locale = %s\n\n%s",
                 $template->getName(),
                 $template->getEntityName(),
                 $template->getSubject(),
                 $template->getIsSystem(),
                 $template->getIsEditable(),
+                $template->getLocale(),
                 $template->getContent()
             );
 
@@ -76,7 +77,10 @@ class EmailTemplatesExportCommand extends ContainerAwareCommand
     }
 
     /**
+     * @param null $templateName
+     *
      * @return EmailTemplate[]
+     * @throws \UnexpectedValueException
      */
     private function getEmailTemplates($templateName = null)
     {
