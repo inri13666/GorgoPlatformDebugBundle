@@ -1,0 +1,12 @@
+services:
+    oro_action.action.abstract:
+        class: 'Oro\Component\Action\Action\AbstractAction'
+        abstract: true
+        arguments:
+            - '@oro_action.expression.context_accessor'
+
+    oro_action.action.yml_dump:
+        class: 'Gorgo\Bundle\PlatformDebugBundle\Actions\YmlDumpAction'
+        parent: 'oro_action.action.abstract'
+        tags:
+            - { name: oro_action.action, alias: yml_dump }

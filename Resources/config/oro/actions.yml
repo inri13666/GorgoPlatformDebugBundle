@@ -1,0 +1,71 @@
+operations:
+#    oro_workflow_definition_base:
+#        label: oro.workflow.action.definition_configuration.download
+#        for_all_entities: false
+#        for_all_datagrids: false
+#        entities:
+#            - Oro\Bundle\WorkflowBundle\Entity\WorkflowDefinition
+#        replace:
+#            - entities
+#            - datagrids
+#            - exclude_datagrids
+#            - exclude_entities
+#        entities:
+#            - Oro\Bundle\WorkflowBundle\Entity\WorkflowDefinition
+#        datagrids:
+#            - workflow-definitions-grid
+
+#    oro_workflow_definition_configuration_download:
+##        extends: oro_workflow_definition_base
+##        for_all_entities: false
+##        for_all_datagrids: false
+#        entities:
+#            - Oro\Bundle\WorkflowBundle\Entity\WorkflowDefinition
+#        label: oro.workflow.action.definition_configuration.download
+#        order: 30
+#        button_options:
+#            class: back no-hash icons-holder-text
+#            icon: fa-envelope-o
+##        acl_resource: [EDIT, $.data]
+##        preconditions:
+##            '@equal': [$.data.isSystem, false]
+#        actions:
+#            - '@call_service_method':
+#                service: oro_workflow.dumper.definition_configuration
+#                method: dump
+#                method_parameters: [$.data]
+#                attribute: $.configuration
+#            - '@send_yml':
+#                filename: 'workflows.yml'
+#                data: $.configuration
+#            - '@flash_message':
+#                message: '<a href="%hrefData%" download="%filename%">Download</a>'
+#                type: 'success'
+#                message_parameters:
+#                    hrefData: $fileContent
+#                    filename: 'workflow.yml'
+
+    oro_workflow_definition_translations_download:
+#        extends: oro_workflow_definition_base
+#        for_all_entities: false
+#        for_all_datagrids: false
+        entities:
+            - Oro\Bundle\WorkflowBundle\Entity\WorkflowDefinition
+        datagrids:
+            - workflow-definitions-grid
+        label: oro.workflow.action.definition_translations.download
+        order: 30
+        button_options:
+            class: back no-hash icons-holder-text
+            icon: fa-envelope-o
+#        acl_resource: [EDIT, $.data]
+        actions:
+            - '@call_service_method':
+                service: oro_workflow.dumper.definition_translations
+                method: dump
+                method_parameters: [$.data]
+                attribute: $.translations
+            - '@yml_dump':
+                data: $.translations
+                attribute: $.yml
+            - '@flash_message': {message: $.yml, type: info}
