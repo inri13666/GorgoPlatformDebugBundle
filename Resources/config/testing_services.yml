@@ -1,0 +1,7 @@
+services:
+    gorgo_behat_extension.isolation.windows_pgsql_isolator:
+        class: 'Gorgo\Bundle\PlatformDebugBundle\Testing\Behat\Isolation\WindowsPgsqlIsolator'
+        arguments:
+            - '@symfony2_extension.kernel'
+        tags:
+            - { name: 'oro_behat.isolator', priority: 110 }
