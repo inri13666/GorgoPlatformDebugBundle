@@ -1,1 +1,6 @@
+imports:
+    - { resource: 'workflow_services.yml', ignore_errors: true }
+    - { resource: 'action_services.yml', ignore_errors: true }
+    - { resource: 'database_services.yml', ignore_errors: true }
+
 services:

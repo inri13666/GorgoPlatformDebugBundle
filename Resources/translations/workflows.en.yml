@@ -1,0 +1,10 @@
+oro:
+    workflow:
+        test_workflow_ek_7:
+            label: 'BAP-14449'
+            step:
+                step1:
+                    label: 'START'
+            transition:
+                trans1:
+                    label: 'TRANSIT&EMAIL'

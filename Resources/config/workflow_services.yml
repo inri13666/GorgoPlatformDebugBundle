@@ -1,0 +1,6 @@
+services:
+    oro_workflow.dumper.definition_configuration:
+        class: 'Gorgo\Bundle\PlatformDebugBundle\Dumper\Workflow\WorkflowConfigurationDumper'
+
+    oro_workflow.dumper.definition_translations:
+        class: 'Gorgo\Bundle\PlatformDebugBundle\Dumper\Workflow\WorkflowTranslationsDumper'
