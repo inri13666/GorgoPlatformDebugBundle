@@ -45,27 +45,29 @@ operations:
 #                    hrefData: $fileContent
 #                    filename: 'workflow.yml'
 
-    oro_workflow_definition_translations_download:
-#        extends: oro_workflow_definition_base
-#        for_all_entities: false
-#        for_all_datagrids: false
-        entities:
-            - Oro\Bundle\WorkflowBundle\Entity\WorkflowDefinition
-        datagrids:
-            - workflow-definitions-grid
-        label: oro.workflow.action.definition_translations.download
-        order: 30
-        button_options:
-            class: back no-hash icons-holder-text
-            icon: fa-envelope-o
-#        acl_resource: [EDIT, $.data]
-        actions:
-            - '@call_service_method':
-                service: oro_workflow.dumper.definition_translations
-                method: dump
-                method_parameters: [$.data]
-                attribute: $.translations
-            - '@yml_dump':
-                data: $.translations
-                attribute: $.yml
-            - '@flash_message': {message: $.yml, type: info}
+#    oro_workflow_definition_translations_download:
+##        extends: oro_workflow_definition_base
+##        for_all_entities: false
+##        for_all_datagrids: false
+#        entities:
+#            - Oro\Bundle\WorkflowBundle\Entity\WorkflowDefinition
+#        datagrids:
+#            - workflow-definitions-grid
+#        label: oro.workflow.action.definition_translations.download
+#        order: 30
+#        preconditions:
+#            - '@not_empty': [$.id]
+#        button_options:
+#            class: back no-hash icons-holder-text
+#            icon: fa-envelope-o
+##        acl_resource: [EDIT, $.data]
+#        actions:
+#            - '@call_service_method':
+#                service: oro_workflow.dumper.definition_translations
+#                method: dump
+#                method_parameters: [$.data]
+#                attribute: $.translations
+#            - '@yml_dump':
+#                data: $.translations
+#                attribute: $.yml
+#            - '@flash_message': {message: $.yml, type: info}

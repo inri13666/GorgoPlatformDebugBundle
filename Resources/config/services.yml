@@ -1,5 +1,6 @@
 imports:
     - { resource: 'workflow_services.yml' }
     - { resource: 'action_services.yml' }
+    - { resource: 'database_services.yml' }
 
 services:
