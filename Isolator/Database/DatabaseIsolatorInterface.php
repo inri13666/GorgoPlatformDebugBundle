@@ -28,4 +28,28 @@ interface DatabaseIsolatorInterface
      * @return mixed
      */
     public function restore($id, DatabaseConfigurationInterface $databaseConfiguration);
+
+    /**
+     * @param string $name
+     * @param DatabaseConfigurationInterface $databaseConfiguration
+     *
+     * @return mixed
+     */
+    public function drop($name, DatabaseConfigurationInterface $databaseConfiguration);
+
+    /**
+     * @param string $name
+     * @param DatabaseConfigurationInterface $databaseConfiguration
+     *
+     * @return mixed
+     */
+    public function verify($name, DatabaseConfigurationInterface $databaseConfiguration);
+
+    /**
+     * @param string $id
+     * @param DatabaseConfigurationInterface $databaseConfiguration
+     *
+     * @return mixed
+     */
+    public function getBackupDbName($id, DatabaseConfigurationInterface $databaseConfiguration);
 }

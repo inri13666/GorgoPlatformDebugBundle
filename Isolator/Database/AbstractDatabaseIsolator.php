@@ -14,6 +14,16 @@ abstract class AbstractDatabaseIsolator implements DatabaseIsolatorInterface
     const OS_UNKNOWN = 'UNKNOWN';
 
     /**
+     * @return array
+     */
+    abstract public function getSupportedOs();
+
+    /**
+     * @return array
+     */
+    abstract public function getSupportedDrivers();
+
+    /**
      * @return string
      */
     protected function getCurrentOs()
@@ -42,12 +52,10 @@ abstract class AbstractDatabaseIsolator implements DatabaseIsolatorInterface
     }
 
     /**
-     * @return array
+     * @inheritDoc
      */
-    abstract public function getSupportedOs();
-
-    /**
-     * @return array
-     */
-    abstract public function getSupportedDrivers();
+    public function getBackupDbName($id, DatabaseConfigurationInterface $databaseConfiguration)
+    {
+        return sprintf('%s_%s_%s', self::SALT, $databaseConfiguration->getDbName(), $id);
+    }
 }

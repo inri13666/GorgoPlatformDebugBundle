@@ -82,22 +82,19 @@ class PgsqlDatabaseIsolator extends AbstractDatabaseIsolator
             putenv(sprintf('PGPASSWORD=%s', $databaseConfiguration->getPassword()));
         }
 
-        $database = sprintf('%s_%s_%s', self::SALT, $databaseConfiguration->getDbName(), $id);
+        $database = $this->getBackupDbName($id, $databaseConfiguration);
 
         $user = $this->resolveUser($databaseConfiguration);
         $host = $this->resolveHost($databaseConfiguration);
         $port = $this->resolvePort($databaseConfiguration);
 
-        $this->processExecutor->execute(
-            $this->getVerifyDatabaseCommand($user, $host, $port, $databaseConfiguration->getDbName())
-        );
-        $this->processExecutor->execute(
-            $this->getDropDatabaseCommand($user, $host, $port, $databaseConfiguration->getDbName())
-        );
-        $this->processExecutor->execute($this->getDropDatabaseCommand($user, $host, $port, $database));
-        $this->processExecutor->execute(
-            $this->getDumpCommand($user, $host, $port, $databaseConfiguration->getDbName(), $database)
-        );
+        if ($this->verify($databaseConfiguration->getDbName(), $databaseConfiguration)) {
+            $this->processExecutor->execute($this->getKillConnectionsCommand($user, $host, $port, $database));
+            $this->drop($database, $databaseConfiguration);
+            $this->processExecutor->execute(
+                $this->getDumpCommand($user, $host, $port, $databaseConfiguration->getDbName(), $database)
+            );
+        }
     }
 
     /**
@@ -109,20 +106,64 @@ class PgsqlDatabaseIsolator extends AbstractDatabaseIsolator
             putenv(sprintf('PGPASSWORD=%s', $databaseConfiguration->getPassword()));
         }
 
-        $database = sprintf('%s_%s_%s', self::SALT, $databaseConfiguration->getDbName(), $id);
+        $database = $this->getBackupDbName($id, $databaseConfiguration);
 
         $user = $this->resolveUser($databaseConfiguration);
         $host = $this->resolveHost($databaseConfiguration);
         $port = $this->resolvePort($databaseConfiguration);
 
-        $this->processExecutor->execute($this->getVerifyDatabaseCommand($user, $host, $port, $database));
-        $this->processExecutor->execute($this->getKillConnectionsCommand($user, $host, $port, $database));
-        $this->processExecutor->execute(
-            $this->getDropDatabaseCommand($user, $host, $port, $databaseConfiguration->getDbName())
-        );
-        $this->processExecutor->execute(
-            $this->getDumpCommand($user, $host, $port, $database, $databaseConfiguration->getDbName())
-        );
+        if ($this->verify($database, $databaseConfiguration)) {
+            $this->processExecutor->execute($this->getKillConnectionsCommand(
+                $user,
+                $host,
+                $port,
+                $databaseConfiguration->getDbName()
+            ));
+            $this->drop($databaseConfiguration->getDbName(), $databaseConfiguration);
+            $this->processExecutor->execute(
+                $this->getDumpCommand($user, $host, $port, $database, $databaseConfiguration->getDbName())
+            );
+        } else {
+            throw new \Exception(sprintf('Verification failed for "%s"', $databaseConfiguration->getDbName()));
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function drop($name, DatabaseConfigurationInterface $databaseConfiguration)
+    {
+        if ($databaseConfiguration->getPassword()) {
+            putenv(sprintf('PGPASSWORD=%s', $databaseConfiguration->getPassword()));
+        }
+
+        $user = $this->resolveUser($databaseConfiguration);
+        $host = $this->resolveHost($databaseConfiguration);
+        $port = $this->resolvePort($databaseConfiguration);
+
+        $this->processExecutor->execute($this->getDropDatabaseCommand($user, $host, $port, $name));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function verify($name, DatabaseConfigurationInterface $databaseConfiguration)
+    {
+        if ($databaseConfiguration->getPassword()) {
+            putenv(sprintf('PGPASSWORD=%s', $databaseConfiguration->getPassword()));
+        }
+
+        $user = $this->resolveUser($databaseConfiguration);
+        $host = $this->resolveHost($databaseConfiguration);
+        $port = $this->resolvePort($databaseConfiguration);
+
+        try {
+            $this->processExecutor->execute($this->getVerifyDatabaseCommand($user, $host, $port, $name));
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     /**

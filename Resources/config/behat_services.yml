@@ -1,0 +1,8 @@
+services:
+    oro_behat.extension.isolation.database:
+        class: 'Gorgo\Bundle\PlatformDebugBundle\Isolator\Behat\DatabaseBehatIsolator'
+        arguments:
+            - '@oro_debug.database.isolation.isolator.registry'
+            - '%installed%'
+#        tags:
+#            - { name: 'oro_behat.isolator', priority: 110 }
