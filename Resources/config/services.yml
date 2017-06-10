@@ -2,6 +2,6 @@ imports:
     - { resource: 'workflow_services.yml', ignore_errors: true }
     - { resource: 'action_services.yml', ignore_errors: true }
     - { resource: 'database_services.yml', ignore_errors: true }
-    - { resource: 'behat_services.yml', ignore_errors: true }
+    - { resource: 'message_queue.yml', ignore_errors: true }
 
 services:
