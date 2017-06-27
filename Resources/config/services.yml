@@ -3,5 +3,6 @@ imports:
     - { resource: 'action_services.yml', ignore_errors: true }
     - { resource: 'database_services.yml', ignore_errors: true }
     - { resource: 'message_queue.yml', ignore_errors: true }
+    - { resource: 'client.yml', ignore_errors: true }
 
 services:
