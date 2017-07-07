@@ -3,12 +3,31 @@
 namespace Gorgo\Bundle\PlatformDebugBundle\Command\Fixtures;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
+use Nelmio\Alice\Persister\Doctrine;
+use Oro\Bundle\AddressBundle\Entity\AddressType;
+use Oro\Bundle\AddressBundle\Entity\Country;
+use Oro\Bundle\AddressBundle\Entity\Region;
+use Oro\Bundle\AddressBundle\Entity\Repository\AddressTypeRepository;
+use Oro\Bundle\AddressBundle\Entity\Repository\RegionRepository;
+use Oro\Bundle\CustomerBundle\Entity\CustomerUserRole;
+use Oro\Bundle\CustomerBundle\Entity\Repository\CustomerUserRoleRepository;
 use Oro\Bundle\EntityConfigBundle\Attribute\Entity\AttributeFamily;
+use Oro\Bundle\EntityExtendBundle\Tools\ExtendHelper;
+use Oro\Bundle\PricingBundle\Entity\CombinedPriceList;
+use Oro\Bundle\PricingBundle\Entity\PriceList;
+use Oro\Bundle\PricingBundle\Entity\PriceListCurrency;
+use Oro\Bundle\PricingBundle\Entity\Repository\CombinedPriceListRepository;
+use Oro\Bundle\PricingBundle\Entity\Repository\PriceListRepository;
+use Oro\Bundle\ProductBundle\Entity\ProductUnit;
+use Oro\Bundle\ProductBundle\Entity\Repository\ProductUnitRepository;
 use Oro\Bundle\ProductBundle\Migrations\Data\ORM\LoadProductDefaultAttributeFamilyData;
 use Oro\Bundle\TranslationBundle\Entity\Language;
 use Oro\Bundle\UserBundle\Entity\Repository\RoleRepository;
 use Oro\Bundle\UserBundle\Entity\Role;
 use Oro\Bundle\UserBundle\Entity\User;
+use Oro\Bundle\WebsiteBundle\Entity\Repository\WebsiteRepository;
+use Oro\Bundle\WebsiteBundle\Entity\Website;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -43,6 +62,7 @@ class LoadFixturesCommand extends ContainerAwareCommand
         }
         $loader = new AliceLoader();
         $loader->setLogger(new ConsoleLogger($output));
+        $loader->setPersister(new Doctrine($this->getEntityManager(), true));
         $loader->addParser($this->getContainer()->get('gorgo.fixtures.yml_parser'));
         $loader->setReferences($this->configureBaseReferences()->toArray());
         $data = $loader->load($fixture);
@@ -69,6 +89,83 @@ class LoadFixturesCommand extends ContainerAwareCommand
             'en_language',
             $this->getEntityManager()->getRepository(Language::class)->findOneBy(['code' => 'en'])
         );
+
+        //From \Oro\Bundle\ApplicationBundle\Tests\Behat\ReferenceRepositoryInitializer
+        /** @var EntityRepository $repository */
+        $repository = $this->getEntityManager()->getRepository('OroAddressBundle:Country');
+        /** @var Country $germany */
+        $germany = $repository->findOneBy(['name' => 'Germany']);
+        $references->set('germany', $germany);
+        /** @var Country $us */
+        $us = $repository->findOneBy(['name' => 'United States']);
+        $references->set('united_states', $us);
+
+        /** @var RegionRepository $repository */
+        $repository = $this->getEntityManager()->getRepository('OroAddressBundle:Region');
+        /** @var Region $berlin */
+        $berlin = $repository->findOneBy(['name' => 'Berlin']);
+        $references->set('berlin', $berlin);
+
+        /** @var CustomerUserRoleRepository $repository */
+        $repository = $this->getEntityManager()->getRepository('OroCustomerBundle:CustomerUserRole');
+        /** @var CustomerUserRole buyer */
+        $buyer = $repository->findOneBy(['role' => 'ROLE_FRONTEND_BUYER']);
+        $references->set('buyer', $buyer);
+
+        /** @var CustomerUserRole $administrator */
+        $administrator = $repository->findOneBy(['role' => 'ROLE_FRONTEND_ADMINISTRATOR']);
+        $references->set('front_admin', $administrator);
+
+        /** @var ProductUnitRepository $repository */
+        $repository = $this->getEntityManager()->getRepository('OroProductBundle:ProductUnit');
+        /** @var ProductUnit $item */
+        $item = $repository->findOneBy(['code' => 'item']);
+        $references->set('item', $item);
+        /** @var ProductUnit $each */
+        $each = $repository->findOneBy(['code' => 'each']);
+        $references->set('each', $each);
+        /** @var ProductUnit $set */
+        $set = $repository->findOneBy(['code' => 'set']);
+        $references->set('set', $set);
+
+        /** @var AddressTypeRepository $repository */
+        $repository = $this->getEntityManager()->getRepository('OroAddressBundle:AddressType');
+        /** @var AddressType $billingType */
+        $billingType = $repository->findOneBy(['name' => 'billing']);
+        $references->set('billingType', $billingType);
+        /** @var AddressType $shippingType */
+        $shippingType = $repository->findOneBy(['name' => 'shipping']);
+        $references->set('shippingType', $shippingType);
+
+        /** @var EntityRepository $repository */
+        $repository = $this->getEntityManager()->getRepository('OroPricingBundle:PriceListCurrency');
+        /** @var PriceListCurrency EUR */
+        $eur = $repository->findOneBy(['currency' => 'EUR']);
+        $references->set('eur', $eur);
+
+        /** @var PriceListRepository $repository */
+        $repository = $this->getEntityManager()->getRepository('OroPricingBundle:PriceList');
+        /** @var PriceList $pricelist1 */
+        $pricelist1 = $repository->findOneBy(['id' => '1']);
+        $references->set('defaultPriceList', $pricelist1);
+
+        /** @var WebsiteRepository $repository */
+        $repository = $this->getEntityManager()->getRepository('OroWebsiteBundle:Website');
+        /** @var Website $website1 */
+        $website1 = $repository->findOneBy(['id' => '1']);
+        $references->set('website1', $website1);
+
+        /** @var CombinedPriceListRepository $repository */
+        $repository = $this->getEntityManager()->getRepository('OroPricingBundle:CombinedPriceList');
+        /** @var CombinedPriceList $combinedPriceList */
+        $combinedPriceList = $repository->findOneBy(['id' => '1']);
+        $references->set('combinedPriceList', $combinedPriceList);
+
+        $inventoryStatusClassName = ExtendHelper::buildEnumValueClassName('prod_inventory_status');
+        $enumInventoryStatuses = $this->getEntityManager()
+            ->getRepository($inventoryStatusClassName)
+            ->findOneBy(['id' => 'in_stock']);
+        $references->set('enumInventoryStatuses', $enumInventoryStatuses);
 
         return $references;
     }
