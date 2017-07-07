@@ -7,3 +7,4 @@ Table of Improvements
 Table of Commands
 -----------------
  - [Entity Translations Dump](./Resources/doc/Command/entity.translations.dump.md)
+ - [Behat Fixtures Loader](./Resources/doc/Command/behat.fixtures.loader.md)
