@@ -6,3 +6,8 @@ imports:
     - { resource: 'client.yml', ignore_errors: true }
 
 services:
+
+    gorgo.fixtures.yml_parser:
+        class: 'Gorgo\Bundle\PlatformDebugBundle\Fixtures\GorgoYamlParser'
+        calls:
+            - [setKernel, ['@kernel']]
