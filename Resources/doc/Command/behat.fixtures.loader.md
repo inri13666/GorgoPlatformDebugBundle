@@ -3,7 +3,7 @@
 
 #### Usage: 
 ```bash
-$ app gorgo:fixtures:load "@OroSaleBundle:QuoteFixture.yml"
+$ app gorgo:fixtures:load "@OroFlatRateShippingBundle:FlatRateIntegration.yml" "@OroPaymentTermBundle:PaymentTermIntegration.yml" "@OroCheckoutBundle:Checkout.yml" "@OroCheckoutBundle:InventoryLevel.yml"
 or
 $ app gorgo:fixtures:load "@OroSaleBundle/Tests/Behat/Features/Fixtures/QuoteFixture.yml"
 or

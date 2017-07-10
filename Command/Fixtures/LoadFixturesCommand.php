@@ -23,7 +23,7 @@ class LoadFixturesCommand extends ContainerAwareCommand
     {
         $this
             ->setName('gorgo:fixtures:load')
-            ->addArgument('fixture', InputArgument::REQUIRED)
+            ->addArgument('fixture', InputArgument::IS_ARRAY | InputArgument::REQUIRED)
             ->addOption('type', null, InputOption::VALUE_OPTIONAL, '', 'behat')
             ->setDescription('Loads Alice fixtures from Behat');
     }
@@ -33,26 +33,31 @@ class LoadFixturesCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $fixture = str_replace(':', '/Tests/Behat/Features/Fixtures/', $input->getArgument('fixture'));
-        if ('@' === $fixture[0]) {
-            $fixture = $this->getContainer()->get('kernel')->locateResource($fixture, null, true);
+        $fixtures = $input->getArgument('fixture');
+        $kernel = $this->getContainer()->get('kernel');
+        foreach ($fixtures as $k => $fixture) {
+            $fixture = str_replace(':', '/Tests/Behat/Features/Fixtures/', $fixture);
+            if ('@' === $fixture[0]) {
+                $fixture = $kernel->locateResource($fixture, null, true);
+            }
+            $fixtures[$k] = $fixture;
         }
-        $loader = new AliceLoader();
+        $loader = $this->getContainer()->get('gorgo.fixtures.loader');
         $loader->setLogger(new ConsoleLogger($output));
-        $loader->setPersister(new Doctrine($this->getEntityManager(), true));
-        $loader->addParser($this->getContainer()->get('gorgo.fixtures.yml_parser'));
         $references = new AliceCollection();
-        $initializer = new ReferenceRepositoryInitializer(
-            $this->getContainer()->get('kernel'),
-            $references
-        );
+        $initializer = new ReferenceRepositoryInitializer($kernel, $references);
         $initializer->init();
 
-        $loader->setReferences($references->toArray());
-        $data = $loader->load($fixture);
-        foreach ($data as $item) {
-            $this->getEntityManager()->persist($item);
+        $references = $references->toArray();
+        foreach ($fixtures as $fixture) {
+            $loader->setReferences($references);
+            $data = $loader->load($fixture);
+            $references = array_merge($references, $data);
+            foreach ($data as $item) {
+                $this->getEntityManager()->persist($item);
+            }
         }
+
         $this->getEntityManager()->flush();
     }
 

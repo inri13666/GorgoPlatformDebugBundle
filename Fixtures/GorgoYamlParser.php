@@ -2,6 +2,7 @@
 
 namespace Gorgo\Bundle\PlatformDebugBundle\Fixtures;
 
+use Nelmio\Alice\Fixtures\Loader;
 use Nelmio\Alice\Fixtures\Parser\Methods\Yaml;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -23,7 +24,7 @@ class GorgoYamlParser extends Yaml
      */
     protected function processIncludes($data, $filename)
     {
-        $includes =  isset($data['include']) ? $data['include'] : [];
+        $includes = isset($data['include']) ? $data['include'] : [];
         unset($data['include']);
 
         if ($includes) {
@@ -42,5 +43,13 @@ class GorgoYamlParser extends Yaml
         }
 
         return $data;
+    }
+
+    /**
+     * @param Loader $context
+     */
+    public function setContext(Loader $context)
+    {
+        $this->context = $context;
     }
 }
