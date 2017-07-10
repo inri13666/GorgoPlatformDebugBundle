@@ -52,12 +52,12 @@ class LoadFixturesCommand extends ContainerAwareCommand
         foreach ($fixtures as $fixture) {
             $loader->setReferences($references);
             $data = $loader->load($fixture);
-            $references = array_merge($references, $data);
             foreach ($data as $item) {
                 $this->getEntityManager()->persist($item);
             }
+            $this->getEntityManager()->flush();
+            $references = array_merge($references, $data);
         }
-
         $this->getEntityManager()->flush();
     }
 
