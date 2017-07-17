@@ -43,7 +43,7 @@ class DeadlockProcessor implements MessageProcessorInterface
             ['id' => Type::INTEGER]
         );
 
-        usleep(125000);
+        usleep(75000);
 
         $connection->executeQuery(
             'SELECT * FROM gorgo_deadlock_test WHERE id = :id FOR UPDATE',
