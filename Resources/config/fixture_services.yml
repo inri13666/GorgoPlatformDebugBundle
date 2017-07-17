@@ -1,0 +1,25 @@
+services:
+
+    gorgo.fixtures.persister.doctrine:
+        lazy: true
+        class: 'Nelmio\Alice\Persister\Doctrine'
+        arguments:
+            - '=@doctrine->getEntityManager()'
+            - true
+
+    gorgo.fixtures.yml_parser:
+        lazy: true
+        class: 'Gorgo\Bundle\PlatformDebugBundle\Fixtures\GorgoYamlParser'
+        arguments:
+            - '@gorgo.fixtures.loader'
+        calls:
+            - [setKernel, ['@kernel']]
+
+    gorgo.fixtures.loader:
+        lazy: true
+        class: 'Gorgo\Bundle\PlatformDebugBundle\Fixtures\GorgoAliceLoader'
+        calls:
+            - [setLogger, ['@monolog.logger']]
+            - [setPersister, ['@gorgo.fixtures.persister.doctrine']]
+            - [addParser, ['@gorgo.fixtures.yml_parser']]
+
