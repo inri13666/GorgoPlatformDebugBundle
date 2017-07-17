@@ -1,0 +1,11 @@
+services:
+    gorgo.async.null_processor:
+        class: Gorgo\Bundle\PlatformDebugBundle\Async\NullProcessor
+        tags:
+            - { name: 'oro_message_queue.client.message_processor', topicName: 'gorgo.null' }
+
+    gorgo.async.deadlock_processor:
+        class: Gorgo\Bundle\PlatformDebugBundle\Async\DeadlockProcessor
+        arguments: ['@doctrine']
+        tags:
+            - { name: 'oro_message_queue.client.message_processor', topicName: 'gorgo.deadlock' }
