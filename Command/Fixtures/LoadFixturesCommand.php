@@ -12,7 +12,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
 use Nelmio\Alice\Instances\Collection as AliceCollection;
-use Nelmio\Alice\Fixtures\Loader as AliceLoader;
 
 class LoadFixturesCommand extends ContainerAwareCommand
 {
@@ -44,6 +43,7 @@ class LoadFixturesCommand extends ContainerAwareCommand
         }
         $loader = $this->getContainer()->get('gorgo.fixtures.loader');
         $loader->setLogger(new ConsoleLogger($output));
+        $loader->setPersister(new Doctrine($this->getContainer()->get('doctrine')->getManager()));
         $references = new AliceCollection();
         $initializer = new ReferenceRepositoryInitializer($kernel, $references);
         $initializer->init();
