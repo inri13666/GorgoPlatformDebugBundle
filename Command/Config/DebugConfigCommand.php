@@ -15,7 +15,8 @@ class DebugConfigCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this->setName('oro:debug:config')
-            ->addOption('parameter', 'p', InputOption::VALUE_REQUIRED, '');
+            //->addOption('parameter', 'p', InputOption::VALUE_REQUIRED, '')
+        ;
     }
 
     /**

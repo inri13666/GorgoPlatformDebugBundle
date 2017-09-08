@@ -20,7 +20,7 @@ class CacheClearCommand extends \Symfony\Bundle\FrameworkBundle\Command\CacheCle
                 str_replace('/', DIRECTORY_SEPARATOR, $this->getContainer()->get('kernel')->getCacheDir())
             );
         }
-        $p = new Process($command);
+        $p = new Process($command, null, null, null, null);
         $p->run();
         $output->writeln(sprintf('Cache cleared for %s', $this->getContainer()->get('kernel')->getEnvironment()));
     }
