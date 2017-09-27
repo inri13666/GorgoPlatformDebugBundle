@@ -1,25 +1,11 @@
 <?php
 
-/*
- * This file is part of the Symfony package.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Gorgo\Bundle\PlatformDebugBundle\Command\Bundle;
 
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 use Sensio\Bundle\GeneratorBundle\Model\Bundle;
 use Symfony\Component\Filesystem\Filesystem;
 
-/**
- * Generates a bundle.
- *
- * @author Fabien Potencier <fabien@symfony.com>
- */
 class BundleGenerator extends Generator
 {
     private $filesystem;
@@ -59,6 +45,7 @@ class BundleGenerator extends Generator
             $this->renderFile('bundle/Extension.php.twig', $dir.'/DependencyInjection/'.$bundle->getBasename().'Extension.php', $parameters);
             $this->renderFile('bundle/Configuration.php.twig', $dir.'/DependencyInjection/Configuration.php', $parameters);
         }
+
         $this->renderFile('bundle/DefaultController.php.twig', $dir.'/Controller/DefaultController.php', $parameters);
         $this->renderFile('bundle/index.html.twig.twig', $dir.'/Resources/views/Default/index.html.twig', $parameters);
 
@@ -78,5 +65,19 @@ class BundleGenerator extends Generator
 
         // render the bundles.yml
         $this->renderFile('bundle/bundles.yml.twig', $dir.'/Resources/config/oro/bundles.yml', $parameters);
+        $this->renderFile('bundle/translations.en.yml.twig', $dir.'/Resources/translations/translations.en.yml', $parameters);
+
+        // render migrations
+        $this->renderFile(
+            'bundle/installer.php.twig',
+            $dir.'/Migrations/Schema/'.$bundle->getName().'Installer.php',
+            $parameters
+        );
+
+        $this->renderFile(
+            'bundle/migration.php.twig',
+            $dir.'/Migrations/Schema/v1_0/'.$bundle->getName().'.php',
+            $parameters
+        );
     }
 }
