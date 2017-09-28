@@ -65,7 +65,7 @@ class BundleGenerator extends Generator
 
         // render the bundles.yml
         $this->renderFile('bundle/bundles.yml.twig', $dir.'/Resources/config/oro/bundles.yml', $parameters);
-        $this->renderFile('bundle/translations.en.yml.twig', $dir.'/Resources/translations/translations.en.yml', $parameters);
+        $this->renderFile('bundle/messages.en.yml.twig', $dir.'/Resources/translations/messages.en.yml', $parameters);
 
         // render migrations
         $this->renderFile(
