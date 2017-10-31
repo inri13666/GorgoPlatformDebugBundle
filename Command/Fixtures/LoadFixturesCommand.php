@@ -53,16 +53,23 @@ class LoadFixturesCommand extends ContainerAwareCommand
         $this->initReferences($loader, $this->getReferenceRepositoryInitializes());
 
         $references = $loader->getReferences();
-        foreach ($fixtures as $fixture) {
-            $loader->setReferences($references);
-            $data = $loader->load($fixture);
-            foreach ($data as $item) {
-                $this->getEntityManager()->persist($item);
+
+        $this->getEntityManager()->beginTransaction();
+        try {
+            foreach ($fixtures as $fixture) {
+                $loader->setReferences($references);
+                $data = $loader->load($fixture);
+                foreach ($data as $item) {
+                    $this->getEntityManager()->persist($item);
+                }
+                $this->getEntityManager()->flush();
+                $references = array_merge($references, $data);
             }
-            $this->getEntityManager()->flush();
-            $references = array_merge($references, $data);
+            $this->getEntityManager()->commit();
+        } catch (\Exception $e) {
+            $this->getEntityManager()->rollback();
+            throw $e;
         }
-        $this->getEntityManager()->flush();
     }
 
     /**

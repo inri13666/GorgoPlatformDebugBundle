@@ -1,0 +1,8 @@
+services:
+    oro_api.command.debug_api:
+        class: 'Gorgo\Bundle\PlatformDebugBundle\Command\Api\DebugApiCommand'
+        arguments:
+            - ~
+            - '@?nelmio_api_doc.extractor.api_doc_extractor'
+        tags:
+            - {name: 'console.command'}

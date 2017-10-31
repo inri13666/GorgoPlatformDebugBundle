@@ -1,0 +1,5 @@
+api:
+    entity_aliases:
+        Oro\Bundle\CallBundle\Entity\CallDirection:
+            alias:        calldirection
+            plural_alias: calldirections

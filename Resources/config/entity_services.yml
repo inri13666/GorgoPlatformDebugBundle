@@ -1,0 +1,16 @@
+services:
+    oro_entity.command.debug_entity_structure:
+        class: 'Gorgo\Bundle\PlatformDebugBundle\Command\Entity\DebugEntityStructureCommand'
+        arguments:
+            - ~
+            - '@?oro_entity.provider.structure_data'
+        tags:
+            - {name: 'console.command'}
+
+    oro_entity_config.command.debug_entity_config:
+        class: 'Gorgo\Bundle\PlatformDebugBundle\Command\EntityConfig\DebugEntityConfigCommand'
+        arguments:
+            - ~
+            - '@?doctrine'
+        tags:
+            - {name: 'console.command'}

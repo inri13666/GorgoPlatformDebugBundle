@@ -1,0 +1,40 @@
+services:
+#    gorgo.oro_dataaudit.async.audit_changed_entities_relations:
+#        class: Gorgo\Bundle\PlatformDebugBundle\MessageProcessor\PositiveMessageProcessor
+#        decorates: 'oro_dataaudit.async.audit_changed_entities_relations'
+#    gorgo.oro_dataaudit.async.audit_changed_entities_inverse_relations:
+#        class: Gorgo\Bundle\PlatformDebugBundle\MessageProcessor\PositiveMessageProcessor
+#        decorates: 'oro_dataaudit.async.audit_changed_entities_inverse_relations'
+#    gorgo.oro.product.message_processor.image_resize:
+#        class: Gorgo\Bundle\PlatformDebugBundle\MessageProcessor\PositiveMessageProcessor
+#        decorates: 'oro.product.message_processor.image_resize'
+#    gorgo.oro_search.async.message_processor.index_entity:
+#        class: Gorgo\Bundle\PlatformDebugBundle\MessageProcessor\PositiveMessageProcessor
+#        decorates: 'oro_search.async.message_processor.index_entity'
+#    gorgo.oro_search.async.message_processor.index_entities_by_id:
+#        class: Gorgo\Bundle\PlatformDebugBundle\MessageProcessor\PositiveMessageProcessor
+#        decorates: 'oro_search.async.message_processor.index_entities_by_id'
+#    gorgo.oro_search.async.message_processor.index_entities_by_type:
+#        class: Gorgo\Bundle\PlatformDebugBundle\MessageProcessor\PositiveMessageProcessor
+#        decorates: 'oro_search.async.message_processor.index_entities_by_type'
+#    gorgo.oro_search.async.message_processor.index_entities_by_range:
+#        class: Gorgo\Bundle\PlatformDebugBundle\MessageProcessor\PositiveMessageProcessor
+#        decorates: 'oro_search.async.message_processor.index_entities_by_range'
+#    gorgo.oro_website_search.async_messaging.search_message.processor:
+#        class: Gorgo\Bundle\PlatformDebugBundle\MessageProcessor\PositiveMessageProcessor
+#        decorates: 'oro_website_search.async_messaging.search_message.processor'
+#    gorgo.oro_search.async.message_processor.reindex_entity:
+#        class: Gorgo\Bundle\PlatformDebugBundle\MessageProcessor\PositiveMessageProcessor
+#        decorates: 'oro_search.async.message_processor.reindex_entity'
+#    gorgo.oro_website_search.async_messaging.search_message.processor.job_runner:
+#        class: Gorgo\Bundle\PlatformDebugBundle\MessageProcessor\PositiveMessageProcessor
+#        decorates: 'oro_website_search.async_messaging.search_message.processor.job_runner'
+#    gorgo.oro_redirect.async.direct_url_processor:
+#        class: Gorgo\Bundle\PlatformDebugBundle\MessageProcessor\PositiveMessageProcessor
+#        decorates: 'oro_redirect.async.direct_url_processor'
+
+    gorgo.oro_message_queue.consumption.container_reset_extension:
+        class: 'Gorgo\Bundle\PlatformDebugBundle\MessageQueue\Extension\DisableContainerResetExtension'
+        parent: oro_message_queue.consumption.container_reset_extension
+        decorates: 'oro_message_queue.consumption.container_reset_extension'
+        public: false
