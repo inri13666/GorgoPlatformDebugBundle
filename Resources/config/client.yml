@@ -1,3 +1,1 @@
-services:
-    gorgo.message_queue.extension.debug_extension:
-        class: Gorgo\Bundle\PlatformDebugBundle\MessageQueue\Extension\DebugExtension
+services: ~
