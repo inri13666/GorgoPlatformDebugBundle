@@ -25,7 +25,7 @@ class DebugEmailTemplateCompileCommand extends ContainerAwareCommand
      */
     protected function configure()
     {
-        $this->setName('oro:debug:email:template:compile')
+        $this->setName('gorgo:debug:email:template:compile')
             ->setDescription('Renders given email template')
             ->addOption(
                 'template',

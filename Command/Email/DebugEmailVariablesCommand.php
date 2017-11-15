@@ -23,7 +23,7 @@ class DebugEmailVariablesCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('oro:debug:email:variable')
+            ->setName('gorgo:debug:email:variable')
             ->setDescription('Displays current email templates for an application')
             ->addOption(
                 'entity-class',

@@ -4,17 +4,13 @@ namespace Gorgo\Bundle\PlatformDebugBundle\Command\Fixtures;
 
 use Doctrine\ORM\EntityManager;
 use Gorgo\Bundle\PlatformDebugBundle\Fixtures\GorgoAliceLoader;
-use Nelmio\Alice\Persister\Doctrine;
-use Oro\Bundle\ApplicationBundle\Tests\Behat\ReferenceRepositoryInitializer;
 use Oro\Bundle\TestFrameworkBundle\Behat\Isolation\ReferenceRepositoryInitializerInterface;
-use Oro\Bundle\TestFrameworkBundle\Test\DataFixtures\AliceFixtureLoader;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
-use Nelmio\Alice\Instances\Collection as AliceCollection;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 class LoadFixturesCommand extends ContainerAwareCommand

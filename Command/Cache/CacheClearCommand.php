@@ -13,6 +13,8 @@ class CacheClearCommand extends \Symfony\Bundle\FrameworkBundle\Command\CacheCle
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        return parent::execute($input, $output);
+
         $command = sprintf('rm -rf %s', $this->getContainer()->get('kernel')->getCacheDir());
         if ('WINNT' === PHP_OS) {
             $command = sprintf(

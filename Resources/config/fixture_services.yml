@@ -1,5 +1,4 @@
 services:
-
     gorgo.fixtures.persister.doctrine:
         lazy: true
         class: 'Nelmio\Alice\Persister\Doctrine'

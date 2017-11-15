@@ -1,0 +1,5 @@
+services:
+    oro_behat.command.debug_reference_repositury:
+        class: 'Gorgo\Bundle\PlatformDebugBundle\Command\Behat\DebugReferenceRepositoryCommand'
+        tags:
+            - {name: 'console.command'}

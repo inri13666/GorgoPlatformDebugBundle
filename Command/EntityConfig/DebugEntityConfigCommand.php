@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class DebugEntityConfigCommand extends Command
 {
-    const NAME = 'oro:debug:entity-config';
+    const NAME = 'gorgo:debug:entity-config';
 
     /** @var ManagerRegistry */
     protected $registry;

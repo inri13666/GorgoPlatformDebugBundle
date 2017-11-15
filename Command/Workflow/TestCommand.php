@@ -15,7 +15,7 @@ class TestCommand extends ContainerAwareCommand
      */
     public function configure()
     {
-        $this->setName('oro:workflow:test')->setDescription('Execute transition of workflow');
+        $this->setName('gorgo:workflow:test')->setDescription('Execute transition of workflow');
     }
 
     /**

@@ -31,7 +31,7 @@ class EmailTemplatesImportCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('oro:email:template:import')
+            ->setName('gorgo:email:template:import')
             ->addArgument('source', InputArgument::REQUIRED, "Folder or File to import")
             ->addOption('force', null, InputOption::VALUE_NONE, "Force update")
             ->setDescription('Imports email templates');
