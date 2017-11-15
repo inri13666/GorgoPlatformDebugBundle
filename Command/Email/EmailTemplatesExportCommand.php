@@ -24,7 +24,7 @@ class EmailTemplatesExportCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('oro:email:template:export')
+            ->setName('gorgo:email:template:export')
             ->addArgument('dest', InputArgument::REQUIRED, "Folder to export")
             ->addOption('template', null, InputOption::VALUE_OPTIONAL, "template name")
             ->setDescription('Imports email templates');

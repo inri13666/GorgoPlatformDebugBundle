@@ -29,7 +29,7 @@ class DebugOrganizationCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('oro:debug:organization')
+            ->setName('gorgo:debug:organization')
             ->addOption('organization', null, InputOption::VALUE_OPTIONAL, "organization id or name")
             ->setDescription('Displays Organization\'s debug information');
     }

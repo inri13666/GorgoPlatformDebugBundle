@@ -12,6 +12,15 @@ class DisableContainerResetExtension extends ContainerResetExtension
      */
     public function onPreReceived(Context $context)
     {
-        return;
+        return false;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function onPostReceived(Context $context)
+    {
+        return null;
+    }
+
 }

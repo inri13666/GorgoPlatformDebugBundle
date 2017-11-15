@@ -7,5 +7,6 @@ imports:
     - { resource: 'client.yml', ignore_errors: true }
     - { resource: 'entity_services.yml', ignore_errors: true }
     - { resource: 'api_services.yml', ignore_errors: true }
+    - { resource: 'behat_services.yml', ignore_errors: true }
 
 services:

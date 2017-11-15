@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class DebugEntityStructureCommand extends Command
 {
-    const NAME = 'oro:debug:entity-structure';
+    const NAME = 'gorgo:debug:entity-structure';
 
     /** @var EntityStructureDataProvider|null */
     protected $entityStructureDataProvider = null;
